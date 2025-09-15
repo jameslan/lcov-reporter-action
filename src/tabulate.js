@@ -1,5 +1,5 @@
 import { th, tr, td, table, tbody, a, b, span, fragment } from "./html";
-import { normalisePath } from "./util";
+import { createHref, normalisePath } from "./util";
 
 // Tabulate the lcov data in a HTML table.
 export function tabulate(lcov, options) {
@@ -109,12 +109,9 @@ function toRow(file, indent, options) {
 }
 
 function filename(file, indent, options) {
-	const relative = file.file.replace(options.prefix, "");
-	const href = `https://github.com/${options.repository}/blob/${options.commit}/${relative}`;
-	const parts = relative.split("/");
-	const last = parts[parts.length - 1];
+	const { href, filename } = createHref(options, file);
 	const space = indent ? "&nbsp; &nbsp;" : "";
-	return fragment(space, a({ href }, last));
+	return fragment(space, a({ href }, filename));
 }
 
 function percentage(item) {
@@ -147,14 +144,13 @@ function uncovered(file, options) {
 				range.start === range.end
 					? `L${range.start}`
 					: `L${range.start}-L${range.end}`;
-			const relative = file.file.replace(options.prefix, "");
-			const href = `https://github.com/${options.repository}/blob/${options.commit}/${relative}#${fragment}`;
+			const { href } = createHref(options, file);
 			const text =
 				range.start === range.end
 					? range.start
 					: `${range.start}&ndash;${range.end}`;
 
-			return a({ href }, text);
+			return a({ href: `${href}#${fragment}` }, text);
 		})
 		.join(", ");
 }

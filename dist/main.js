@@ -31514,6 +31514,23 @@ function normalisePath(file) {
 	return file.replace(/\\/g, "/");
 }
 
+function createHref(options, file) {
+	const relative = file.file.replace(options.prefix, "");
+	const parts = relative.split("/");
+	const filename = parts[parts.length - 1];
+	const url = require$$1$4.join(
+		options.repository,
+		"blob",
+		options.commit,
+		options.workingDir || "./",
+		relative,
+	);
+	return {
+		href: `https://github.com/${url}`,
+		filename,
+	};
+}
+
 // Tabulate the lcov data in a HTML table.
 function tabulate(lcov, options) {
 	let head;
@@ -31622,12 +31639,9 @@ function toRow(file, indent, options) {
 }
 
 function filename(file, indent, options) {
-	const relative = file.file.replace(options.prefix, "");
-	const href = `https://github.com/${options.repository}/blob/${options.commit}/${relative}`;
-	const parts = relative.split("/");
-	const last = parts[parts.length - 1];
+	const { href, filename } = createHref(options, file);
 	const space = indent ? "&nbsp; &nbsp;" : "";
-	return fragment(space, a({ href }, last));
+	return fragment(space, a({ href }, filename));
 }
 
 function percentage(item) {
@@ -31660,14 +31674,13 @@ function uncovered(file, options) {
 				range.start === range.end
 					? `L${range.start}`
 					: `L${range.start}-L${range.end}`;
-			const relative = file.file.replace(options.prefix, "");
-			const href = `https://github.com/${options.repository}/blob/${options.commit}/${relative}#${fragment}`;
+			const { href } = createHref(options, file);
 			const text =
 				range.start === range.end
 					? range.start
 					: `${range.start}&ndash;${range.end}`;
 
-			return a({ href }, text);
+			return a({ href: `${href}#${fragment}` }, text);
 		})
 		.join(", ");
 }
@@ -31832,7 +31845,11 @@ const MAX_COMMENT_CHARS = 65536;
 
 async function main() {
 	const token = core.getInput("github-token");
-	const lcovFile = core.getInput("lcov-file") || "./coverage/lcov.info";
+	const workingDir = core.getInput("working-directory") || "./";
+	const lcovFile = path.join(
+		workingDir,
+		core.getInput("lcov-file") || "./coverage/lcov.info",
+	);
 	const baseFile = core.getInput("lcov-base");
 	const shouldFilterChangedFiles =
 		core.getInput("filter-changed-files").toLowerCase() === "true";
@@ -31874,6 +31891,7 @@ async function main() {
 		title: title,
 		shouldFilterChangedFiles: shouldFilterChangedFiles,
 		issue_number: prNumber,
+		workingDir,
 	};
 
 	if (shouldFilterChangedFiles) {
