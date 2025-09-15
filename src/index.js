@@ -1,6 +1,7 @@
 import { promises as fs } from "fs";
 import core from "@actions/core";
 import { getOctokit, context } from "@actions/github";
+import path from "path";
 
 import { parse } from "./lcov";
 import { diff } from "./comment";

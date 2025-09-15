@@ -31846,7 +31846,7 @@ const MAX_COMMENT_CHARS = 65536;
 async function main() {
 	const token = core.getInput("github-token");
 	const workingDir = core.getInput("working-directory") || "./";
-	const lcovFile = path.join(
+	const lcovFile = require$$1$4.join(
 		workingDir,
 		core.getInput("lcov-file") || "./coverage/lcov.info",
 	);
