@@ -218,7 +218,7 @@ test("tabulate should generate a correct table", function () {
 				td(
 					a(
 						{
-							href: `https://github.com/${options.repository}/blob/${options.commit}/index.js`,
+							href: `https://github.com/${options.repository}/blob/${options.commit}/frontend/index.js`,
 						},
 						"index.js",
 					),
@@ -234,7 +234,7 @@ test("tabulate should generate a correct table", function () {
 					"&nbsp; &nbsp;",
 					a(
 						{
-							href: `https://github.com/${options.repository}/blob/${options.commit}/src/foo.js`,
+							href: `https://github.com/${options.repository}/blob/${options.commit}/frontend/src/foo.js`,
 						},
 						"foo.js",
 					),
@@ -245,7 +245,7 @@ test("tabulate should generate a correct table", function () {
 				td(
 					a(
 						{
-							href: `https://github.com/${options.repository}/blob/${options.commit}/src/foo.js#L37`,
+							href: `https://github.com/${options.repository}/blob/${options.commit}/frontend/src/foo.js#L37`,
 						},
 						37,
 					),
@@ -257,7 +257,7 @@ test("tabulate should generate a correct table", function () {
 					"&nbsp; &nbsp;",
 					a(
 						{
-							href: `https://github.com/${options.repository}/blob/${options.commit}/src/bar/baz.js`,
+							href: `https://github.com/${options.repository}/blob/${options.commit}/frontend/src/bar/baz.js`,
 						},
 						"baz.js",
 					),
@@ -268,14 +268,14 @@ test("tabulate should generate a correct table", function () {
 				td(
 					a(
 						{
-							href: `https://github.com/${options.repository}/blob/${options.commit}/src/bar/baz.js#L20-L21`,
+							href: `https://github.com/${options.repository}/blob/${options.commit}/frontend/src/bar/baz.js#L20-L21`,
 						},
 						"20&ndash;21",
 					),
 					", ",
 					a(
 						{
-							href: `https://github.com/${options.repository}/blob/${options.commit}/src/bar/baz.js#L27`,
+							href: `https://github.com/${options.repository}/blob/${options.commit}/frontend/src/bar/baz.js#L27`,
 						},
 						"27",
 					),
