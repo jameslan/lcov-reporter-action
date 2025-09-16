@@ -12,6 +12,7 @@ import { normalisePath } from "./util";
 const MAX_COMMENT_CHARS = 65536;
 
 async function main() {
+	console.log(`Context: ${JSON.stringify(context)}`);
 	const token = core.getInput("github-token");
 	const workingDir = core.getInput("working-directory") || "./";
 	const lcovFile = path.join(

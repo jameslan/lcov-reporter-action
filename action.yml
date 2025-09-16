@@ -11,7 +11,7 @@ inputs:
     default: ${{ github.token }}
   pr-number:
     description: Number of the Pull Request
-    required: true
+    required: false
   lcov-file:
     description: The location of the lcov.info file
     required: false

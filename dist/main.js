@@ -31844,6 +31844,7 @@ async function getExistingComments(github, options, context) {
 const MAX_COMMENT_CHARS = 65536;
 
 async function main() {
+	console.log(`Context: ${JSON.stringify(githubExports.context)}`);
 	const token = core.getInput("github-token");
 	const workingDir = core.getInput("working-directory") || "./";
 	const lcovFile = require$$1$4.join(
